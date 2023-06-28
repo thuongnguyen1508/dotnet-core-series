@@ -1,1 +1,1 @@
-# lec-admin-service
+# series of .Net core
