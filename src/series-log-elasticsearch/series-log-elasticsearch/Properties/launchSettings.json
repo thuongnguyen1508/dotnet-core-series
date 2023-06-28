@@ -22,9 +22,13 @@
       "dotnetRunMessages": "true",
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:5001;http://localhost:5000",
+      "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "WRITE_LOG_TO": "1",
+        "APM_ELASTICSEARCH_URL": "http://host.docker.internal:9200",
+        "ELASTIC_USER": "0",
+        "ELASTIC_PASSWORD": "0"
       }
     }
   }
