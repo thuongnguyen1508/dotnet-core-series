@@ -25,7 +25,7 @@
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "WRITE_LOG_TO": "4",
+        "WRITE_LOG_TO": "1",
         "APM_ELASTICSEARCH_URL": "http://host.docker.internal:9200",
         "ELASTIC_USER": "0",
         "ELASTIC_PASSWORD": "0"

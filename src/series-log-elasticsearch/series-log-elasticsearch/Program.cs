@@ -123,10 +123,27 @@ namespace series_log_elasticsearch
                         //, buffered: true
                         );
                 }
-                if ((writeTo & WriteLogTo.APM) != WriteLogTo.None
-                    && !string.IsNullOrEmpty(ApmElasticSearchUrl)
-                    && !string.IsNullOrEmpty(ApmElasticUser)
-                    && !string.IsNullOrEmpty(ApmElasticPassword))
+                //if ((writeTo & WriteLogTo.APM) != WriteLogTo.None
+                //    && !string.IsNullOrEmpty(ApmElasticSearchUrl)
+                //    && !string.IsNullOrEmpty(ApmElasticUser)
+                //    && !string.IsNullOrEmpty(ApmElasticPassword))
+                //{
+                //    loggerConfig = loggerConfig.Enrich.WithElasticApmCorrelationInfo()
+                //            .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(ApmElasticSearchUrl))
+                //            {
+                //                CustomFormatter = new EcsTextFormatter(),
+                //                AutoRegisterTemplate = false,
+                //                AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv7,
+                //                DetectElasticsearchVersion = true,
+                //                RegisterTemplateFailure = RegisterTemplateRecovery.IndexAnyway,
+                //                ModifyConnectionSettings = x => x.BasicAuthentication(ApmElasticUser, ApmElasticPassword),
+                //                FailureCallback = e => Console.WriteLine("Unable to submit event " + e.RenderMessage()),
+                //                EmitEventFailure = EmitEventFailureHandling.WriteToSelfLog |
+                //                       EmitEventFailureHandling.WriteToFailureSink |
+                //                       EmitEventFailureHandling.RaiseCallback,
+                //            });
+                //}
+                if ((writeTo & WriteLogTo.APM) != WriteLogTo.None)
                 {
                     loggerConfig = loggerConfig.Enrich.WithElasticApmCorrelationInfo()
                             .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(ApmElasticSearchUrl))
@@ -136,7 +153,7 @@ namespace series_log_elasticsearch
                                 AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv7,
                                 DetectElasticsearchVersion = true,
                                 RegisterTemplateFailure = RegisterTemplateRecovery.IndexAnyway,
-                                ModifyConnectionSettings = x => x.BasicAuthentication(ApmElasticUser, ApmElasticPassword),
+                                //ModifyConnectionSettings = x => x.BasicAuthentication(ApmElasticUser, ApmElasticPassword),
                                 FailureCallback = e => Console.WriteLine("Unable to submit event " + e.RenderMessage()),
                                 EmitEventFailure = EmitEventFailureHandling.WriteToSelfLog |
                                        EmitEventFailureHandling.WriteToFailureSink |
