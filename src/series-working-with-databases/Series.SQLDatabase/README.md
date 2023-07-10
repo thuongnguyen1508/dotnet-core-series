@@ -1,13 +1,3 @@
-1. Install dotnet tool:
-
-    dotnet tool install --global dotnet-ef
-2. Install package Microsoft.EntityFrameworkCore.Design & Npgsql.EntityFrameworkCore.PostgreSQL
-
-3. Run command to gen entities:
-
-    dotnet ef dbcontext scaffold "Host=database-1.cvisbvujuezh.ap-southeast-1.rds.amazonaws.com;Port=5432;Database=langgeneral;Username=postgres;Password=t0ps3cr3tt0ps3cr3t" Npgsql.EntityFrameworkCore.PostgreSQL -o Entities
-
-
 # Working with SQL database
 
 There are many type of SQL databases such as: MySql, SQL server, Postgres .v.v.v
@@ -18,32 +8,57 @@ What will solve?:
 - What is neccesary package
 - How to connect db by .Net core
 
-# Run project
+# DB first approach => gen entity from exist database
+
+- Install dotnet tool:
+
+```bash
+    dotnet tool install --global dotnet-ef
+```
+    
+- Install package Microsoft.EntityFrameworkCore.Design & Npgsql.EntityFrameworkCore.{name of db such as PostgreSQL}
+
+- Run command to gen entities:
+
+```bash
+    dotnet ef dbcontext scaffold "connection string" Npgsql.EntityFrameworkCore.{name of db such as PostgreSQL} -o Entities
+    dotnet ef dbcontext scaffold "connection string" Npgsql.EntityFrameworkCore.PostgreSQL -o Entities
+```
+
+# Code first approach => gen database from code
+
+- Install package Microsoft.EntityFrameworkCore.Design & Npgsql.EntityFrameworkCore.{name of db such as PostgreSQL}
+- Run command to create migration and execute ef migrattion:
+
+```bash
+    dotnet ef migrations add {name of migration, example: InitialCreate}
+    dotnet ef database update
+```
+
+
+# Set up project
 
 Clone project
 
 ```bash
-git clone https://github.com/nnhutan/langexchange.git
-cd langexchange
+git clone https://github.com/thuongnguyen1508/dotnet-core-series.git
 ```
 
-Run on local environment
+Base on type of database => set up database local with docker
 
 ```bash
 # ./langexchange
 
-yarn install
-yarn start
+git clone https://github.com/thuongnguyen1508/dotnet-core-series.git
+
 ```
 
-Run on docker
 
-```bash
-# ./langexchange
-
-bin/setup.sh
-```
 
 # Reference
 
 - [Net-6-connect-to-postgresql-database-with-entity-framework-core](https://jasonwatmore.com/post/2022/06/23/net-6-connect-to-postgresql-database-with-entity-framework-core)
+
+- [.Net Cli](https://learn.microsoft.com/en-us/ef/core/cli/dotnet)
+
+- [.Net Cli manage migration ](https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/managing?tabs=dotnet-core-cli)
