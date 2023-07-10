@@ -27,6 +27,8 @@ namespace series_log_elasticsearch.Controllers
         public IEnumerable<WeatherForecast> Get()
         {
             var rng = new Random();
+
+            _logger.LogInformation("Test log to {0}", Environment.GetEnvironmentVariable("WRITE_LOG_TO"));
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),

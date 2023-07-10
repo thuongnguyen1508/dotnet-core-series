@@ -1,0 +1,5 @@
+1. Set writetolog = 1 to write to APM
+2. Create index pattern
+   2.1 Go to http://localhost:5601/
+   2.2 Click Management -> Kibana/ Index Pattern -> Create Index pattern
+3. Discorver/ filter

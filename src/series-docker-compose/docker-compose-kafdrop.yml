@@ -1,0 +1,17 @@
+version: "3.4"
+services:
+  kafdrop:
+    image: obsidiandynamics/kafdrop
+    restart: "no"
+    ports:
+      - "9000:9000"
+    environment:
+      KAFKA_BROKERCONNECT: "host.docker.internal:9092"
+      # KAFKA_BROKERCONNECT: "101.99.31.28:9093"
+      # KAFKA_BROKERCONNECT: "172.20.10.232:9092"
+      JVM_OPTS: "-Xms16M -Xmx48M -Xss180K -XX:-TieredCompilation -XX:+UseStringDeduplication -noverify"
+    networks:
+        - kafka-network
+networks:
+   kafka-network:
+        driver: bridge
