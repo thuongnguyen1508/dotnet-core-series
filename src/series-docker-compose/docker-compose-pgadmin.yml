@@ -1,0 +1,35 @@
+version: '3.4'
+
+services:
+    postgres:
+        container_name: postgres
+        image: postgres:${TAG:-latest}
+        hostname: postgres
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: t0ps3cr3t
+          POSTGRES_DB: chatdb
+        expose:
+          - 5432
+        ports:
+          - "5432:5432"
+        restart: always
+        networks:
+          - postgres-network
+    pgadmin:
+        container_name: pgadmin
+        depends_on:
+        - postgres
+        image: dpage/pgadmin4
+        # restart: always
+        environment:
+          PGADMIN_DEFAULT_EMAIL: admin@admin.com
+          PGADMIN_DEFAULT_PASSWORD: t0ps3cr3t
+        ports:
+          - "5050:80"
+        networks:
+          - postgres-network
+
+networks:
+   postgres-network:
+        driver: bridge

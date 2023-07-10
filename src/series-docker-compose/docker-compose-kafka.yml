@@ -1,0 +1,71 @@
+version: '3.4'
+
+services:
+    zookeeper-server:
+        image: bitnami/zookeeper:latest
+        container_name: zookeeper-local
+        ports:
+        - "2181:80"
+        environment:
+        - ALLOW_ANONYMOUS_LOGIN=yes
+        networks:
+            - kafka-network
+        restart: always
+
+    kafka:
+        image: bitnami/kafka:latest
+        container_name: kafka-local
+        depends_on:
+        - zookeeper-server
+        ports:
+        - "9093:9093"
+        - "9092:9092"
+        environment:
+        - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper-server
+        - ALLOW_PLAINTEXT_LISTENER=yes
+        - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+        - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9093
+        - KAFKA_LISTENERS=PLAINTEXT_HOST://0.0.0.0:9093,PLAINTEXT://0.0.0.0:9092
+        - KAFKA_INTER_BROKER_LISTENER_NAME=PLAINTEXT_HOST
+        networks:
+            - kafka-network
+        restart: always
+
+    kafdrop:
+        image: obsidiandynamics/kafdrop
+        restart: always
+        ports:
+        - "9000:9000"
+        environment:
+            KAFKA_BROKERCONNECT: "host.docker.internal:9092"
+        # KAFKA_BROKERCONNECT: "101.99.31.28:9093"
+        # KAFKA_BROKERCONNECT: "172.20.10.232:9092"
+            JVM_OPTS: "-Xms16M -Xmx48M -Xss180K -XX:-TieredCompilation -XX:+UseStringDeduplication -noverify"
+        networks:
+            - kafka-network
+
+    # nuget-server:
+    #   image: loicsharma/baget:latest
+    #   container_name: nuget-server
+    #   restart: always      
+    #   environment:
+    #     - ApiKey=${NUGET_API_KEY}
+    #     - Storage__Type=FileSystem
+    #     - Storage__Path=/var/baget/packages
+    #     - Database__Type=Sqlite
+    #     - Database__ConnectionString=Data Source=/var/baget/baget.db
+    #     - Search__Type=Database
+    #     - AllowPackageOverwrites=True
+    #     - PackageDeletionBehavior=HardDelete
+    #   volumes:
+    #     - $HOME/nuget-packages:/var/baget
+    #   networks:
+    #     - cargopedia-network
+    #   ports:
+    #     - "5555:80"
+# volumes:
+#   elasticsearch-data:
+
+networks:
+   kafka-network:
+        driver: bridge
