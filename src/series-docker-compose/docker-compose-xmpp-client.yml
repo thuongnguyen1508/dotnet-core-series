@@ -1,0 +1,9 @@
+version: "3.4"
+services:
+  xmpp-web:
+    image: nioc/xmpp-web:latest
+    ports:
+      - "80:80"
+    environment: 
+      - XMPP_WS=https://domain-xmpp.ltd:5281/xmpp-websocket
+      - APP_DEFAULT_DOMAIN=domain-xmpp.ltd

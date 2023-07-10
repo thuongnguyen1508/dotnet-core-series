@@ -1,0 +1,104 @@
+version: '3.4'
+
+services:
+    elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.2.0
+        container_name: elasticsearch
+        ports:
+        - "9200:9200"
+        volumes:
+        - elasticsearch-data:/usr/share/elasticsearch/data
+        environment:
+        - discovery.type=single-node
+        - xpack.security.enabled=false
+        - xpack.monitoring.enabled=true
+        - xpack.watcher.enabled=false
+        - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+        networks:
+            - elasticsearch-network
+        restart: always
+
+    # zookeeper-server:
+    #     image: bitnami/zookeeper:latest
+    #     container_name: zookeeper
+    #     ports:
+    #     - "2181:80"
+    #     environment:
+    #     - ALLOW_ANONYMOUS_LOGIN=yes
+    #     networks:
+    #         - elasticsearch-network
+    #     restart: always
+
+    # kafka:
+    #     image: bitnami/kafka:latest
+    #     container_name: kafka
+    #     depends_on:
+    #     - zookeeper-server
+    #     ports:
+    #     - "9093:9093"
+    #     - "9092:9092"
+    #     environment:
+    #     - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper-server
+    #     - ALLOW_PLAINTEXT_LISTENER=yes
+    #     - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+    #     - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9093
+    #     - KAFKA_LISTENERS=PLAINTEXT_HOST://0.0.0.0:9093,PLAINTEXT://0.0.0.0:9092
+    #     - KAFKA_INTER_BROKER_LISTENER_NAME=PLAINTEXT_HOST
+    #     networks:
+    #         - elasticsearch-network
+    #     restart: always
+
+    # postgres:
+    #     container_name: postgres
+    #     image: postgres:${TAG:-latest}
+    #     hostname: postgres
+    #     environment:
+    #       POSTGRES_USER: postgres
+    #       POSTGRES_PASSWORD: t0ps3cr3t
+    #       POSTGRES_DB: postgres
+    #     expose:
+    #       - 5432
+    #     ports:
+    #       - "5432:5432"
+    #     networks:
+    #       - elasticsearch-network
+
+    kibana:
+        image: docker.elastic.co/kibana/kibana:7.2.0
+        container_name: kibana
+        ports:
+        - "5601:5601"
+        depends_on:
+        - elasticsearch
+        environment:
+        - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+        - XPACK_MONITORING_ENABLED=true
+        networks:
+            - elasticsearch-network
+        restart: always 
+    
+    # nuget-server:
+    #   image: loicsharma/baget:latest
+    #   container_name: nuget-server
+    #   restart: always      
+    #   environment:
+    #     - ApiKey=${NUGET_API_KEY}
+    #     - Storage__Type=FileSystem
+    #     - Storage__Path=/var/baget/packages
+    #     - Database__Type=Sqlite
+    #     - Database__ConnectionString=Data Source=/var/baget/baget.db
+    #     - Search__Type=Database
+    #     - AllowPackageOverwrites=True
+    #     - PackageDeletionBehavior=HardDelete
+    #   volumes:
+    #     - $HOME/nuget-packages:/var/baget
+    #   networks:
+    #     - elasticsearch-network
+    #   ports:
+    #     - "5555:80"
+volumes:
+  elasticsearch-data:
+
+networks:
+   elasticsearch-network:
+        driver: bridge

@@ -1,0 +1,23 @@
+version: "3.2"
+services:
+
+ rebrow:
+    image: marian/rebrow
+    ports:
+      - 5001:5001
+    links:
+      - redis
+    networks:
+      - cargopedia-network
+
+# networking for the Redis container
+# networks:
+#   node_net:
+#     ipam:
+#       driver: default
+#       config:
+#         - subnet: 172.28.0.0/16
+
+networks:
+   cargopedia-network:
+        driver: bridge
