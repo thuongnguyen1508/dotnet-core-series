@@ -62,7 +62,7 @@ namespace Series.SQLDatabase
         private void AddDbContext(IServiceCollection services)
         {
             services.AddDbContext<ChatDbContext>(
-                options => options.UseNpgsql(Env.DB_CONNECTION_STRING)
+                options => options.UseNpgsql(Env.DB_CONNECTION_STRING, b => b.MigrationsAssembly("Series.SQLDatabase"))
                 //options => options.UseMySQL(Env.DB_CONNECTION_STRING)
                 //options => options.UseSqlServer(Env.DB_CONNECTION_STRING)
                 );
