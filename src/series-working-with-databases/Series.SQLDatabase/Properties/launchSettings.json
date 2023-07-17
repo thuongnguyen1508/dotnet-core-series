@@ -14,7 +14,8 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DB_CONNECTION_STRING": "Host=host.docker.internal;Port=5432;Database=chatdb;Username=postgres;Password=t0ps3cr3t"
       }
     },
     "Series.SQLDatabase": {
@@ -24,7 +25,8 @@
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DB_CONNECTION_STRING": "Host=host.docker.internal;Port=5432;Database=chatdb;Username=postgres;Password=t0ps3cr3t"
       }
     }
   }

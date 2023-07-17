@@ -21,7 +21,7 @@ What will solve?:
 - Run command to gen entities:
 
 ```bash
-    dotnet ef dbcontext scaffold "connection string" Npgsql.EntityFrameworkCore.{name of db such as PostgreSQL} -o Entities
+    dotnet ef dbcontext scaffold "connection string" {Npgsql/MySql or ...}.EntityFrameworkCore.{name of db such as PostgreSQL} -o Entities
     dotnet ef dbcontext scaffold "connection string" Npgsql.EntityFrameworkCore.PostgreSQL -o Entities
 ```
 

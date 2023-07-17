@@ -31,5 +31,5 @@ services:
           - postgres-network
 
 networks:
-   postgres-network:
+  postgres-network:
         driver: bridge
