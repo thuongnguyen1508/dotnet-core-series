@@ -24,7 +24,11 @@
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "NEO4J_HOST": "bolt://localhost:7687",
+        "NEO4J_USER": "neo4j",
+        "NEO4J_PASSWORD": "t0ps3cr3tt0ps3cr3t",
+        "NEO4J_DATABASE": "neo4j"
       }
     }
   }
