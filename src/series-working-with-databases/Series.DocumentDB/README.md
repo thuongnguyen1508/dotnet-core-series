@@ -26,6 +26,8 @@ Run script to start db
 
 ```
 
+Now, ChatDbContext is setup as EF core. See extension to understand the way it set up.
+
 
 # Reference
 
