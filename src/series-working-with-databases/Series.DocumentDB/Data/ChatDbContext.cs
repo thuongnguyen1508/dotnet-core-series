@@ -20,5 +20,11 @@ namespace Series.DocumentDB.Data
             _entityName[typeof(UserEntity)] = UserEntity.SCHEMA_NAME;
             _entityName[typeof(MessageEntity)] = UserEntity.SCHEMA_NAME;
         }
+
+        public override void Dispose()
+        {
+            GC.SuppressFinalize(this);
+            base.Dispose();
+        }
     }
 }

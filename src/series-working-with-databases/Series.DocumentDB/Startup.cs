@@ -9,6 +9,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Series.DocumentDB.Data;
 using Series.DocumentDB.Extensions;
+using Series.DocumentDB.Repository;
+using Series.DocumentDB.Repository.Implementations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,10 +39,14 @@ namespace Series.DocumentDB
 
             services.AddDbContext<ChatDbContext>(sp => new ConnectionConfig
             {
-                ConnectionString = Environment.GetEnvironmentVariable(""),
-                DatabaseName = Environment.GetEnvironmentVariable(""),
-                Version = Environment.GetEnvironmentVariable("")
+                ConnectionString = Environment.GetEnvironmentVariable("MONGGO_DB_CONNECTION_STRING"),
+                Version = Environment.GetEnvironmentVariable("DB_VERSION"),
+                DatabaseName = "chat-db"
             });
+
+            MongoConfigurator.Configure();
+
+            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
