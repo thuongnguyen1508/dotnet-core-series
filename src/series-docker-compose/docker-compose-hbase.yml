@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  hbase-master:
+    image: harisekhon/hbase
+    container_name: hbase-master
+    ports:
+      - "16010:16010"  # HBase UI
+    environment:
+      - HBASE_DAEMON=true
+
+  hbase-rest:
+    image: harisekhon/hbase
+    container_name: hbase-rest
+    ports:
+      - "8082:8080"  # HBase REST Server
+    environment:
+      - HBASE_REST=true
+
+  hbase-shell:
+    image: harisekhon/hbase
+    container_name: hbase-shell
+    entrypoint: ["hbase"]
+    tty: true
+
+  hbase-regionserver:
+    image: harisekhon/hbase
+    container_name: hbase-regionserver
+    environment:
+      - HBASE_DAEMON=true
